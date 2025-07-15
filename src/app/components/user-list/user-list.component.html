@@ -1,0 +1,75 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Lista de Usuários</h2>
+        <button class="btn btn-primary" routerLink="/users/create">
+          <i class="fas fa-plus"></i> Novo Usuário
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{ error }}
+        <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="loadUsers()">
+          Tentar Novamente
+        </button>
+      </div>
+
+      <!-- Users Table -->
+      <div *ngIf="!loading && !error" class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Sobrenome</th>
+              <th>Idade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.userId }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.surName }}</td>
+              <td>{{ user.age }}</td>
+              <td>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-sm btn-outline-primary"
+                          routerLink="/users/edit/{{ user.userId }}"
+                          title="Editar">
+                    <i class="fas fa-edit">Editar</i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger"
+                          (click)="deleteUser(user.userId!)"
+                          title="Excluir">
+                    <i class="fas fa-trash">Excluir</i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button (click)="loadUsers(page - 1)" [disabled]="page === 0">Anterior</button>
+        <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+        <button (click)="loadUsers(page + 1)" [disabled]="page + 1 >= totalPages">Próxima</button>
+
+        <!-- Empty State -->
+        <div *ngIf="users.length === 0" class="text-center py-4">
+          <p class="text-muted">Nenhum usuário encontrado.</p>
+          <button class="btn btn-primary" routerLink="/users/create">
+            Criar Primeiro Usuário
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

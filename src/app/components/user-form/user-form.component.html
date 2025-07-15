@@ -1,0 +1,204 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">{{ isEditMode ? 'Editar Usuário' : 'Novo Usuário' }}</h3>
+        </div>
+        <div class="card-body">
+          <!-- Loading -->
+          <div *ngIf="loading" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div *ngIf="error" class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+
+          <!-- Form -->
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+            <!-- Dados Pessoais -->
+            <fieldset class="mb-4">
+              <legend class="h5">Dados Pessoais</legend>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="username" class="form-label">Nome *</label>
+                  <input type="text"
+                         id="username"
+                         formControlName="username"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('username')">
+                  <div *ngIf="isFieldInvalid('username')" class="invalid-feedback">
+                    {{ getFieldError('username') }}
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="surName" class="form-label">Sobrenome *</label>
+                  <input type="text"
+                         id="surName"
+                         formControlName="surName"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('surName')">
+                  <div *ngIf="isFieldInvalid('surName')" class="invalid-feedback">
+                    {{ getFieldError('surName') }}
+                  </div>
+                </div>
+
+<!--                <div class="col-md-6 mb-3">-->
+<!--                  <label for="surName" class="form-label">Email *</label>-->
+<!--                  <input type="text"-->
+<!--                         id="surName"-->
+<!--                         formControlName="email"-->
+<!--                         class="form-control"-->
+<!--                         [class.is-invalid]="isFieldInvalid('surName')">-->
+<!--                  <div *ngIf="isFieldInvalid('surName')" class="invalid-feedback">-->
+<!--                    {{ getFieldError('surName') }}-->
+<!--                  </div>-->
+<!--                </div>-->
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="age" class="form-label">Idade</label>
+                  <input type="number"
+                         id="age"
+                         formControlName="age"
+                         class="form-control">
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Endereço -->
+            <fieldset class="mb-4" formGroupName="address">
+              <legend class="h5">Endereço</legend>
+
+              <div class="row">
+                <div class="col-md-8 mb-3">
+                  <label for="street" class="form-label">Rua *</label>
+                  <input type="text"
+                         id="street"
+                         formControlName="street"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('address.street')">
+                  <div *ngIf="isFieldInvalid('address.street')" class="invalid-feedback">
+                    {{ getFieldError('address.street') }}
+                  </div>
+                </div>
+
+                <div class="col-md-8 mb-3">
+                  <label for="numero" class="form-label">Número *</label>
+                  <input type="number"
+                         id="number"
+                         formControlName="number"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('address.number')">
+                  <div *ngIf="isFieldInvalid('address.number')" class="invalid-feedback">
+                    {{ getFieldError('address.number') }}
+                  </div>
+                </div>
+
+<!--                <div class="col-md-4 mb-3">-->
+<!--                  <label for="zipCode" class="form-label">CEP *</label>-->
+<!--                  <input type="text"-->
+<!--                         id="zipCode"-->
+<!--                         formControlName="zipCode"-->
+<!--                         class="form-control"-->
+<!--                         [class.is-invalid]="isFieldInvalid('address.zipCode')">-->
+<!--                  <div *ngIf="isFieldInvalid('address.zipCode')" class="invalid-feedback">-->
+<!--                    {{ getFieldError('address.zipCode') }}-->
+<!--                  </div>-->
+<!--                </div>-->
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="city" class="form-label">Cidade *</label>
+                  <input type="text"
+                         id="city"
+                         formControlName="city" class="form-control"
+                         [class.is-invalid]="isFieldInvalid('address.city')">
+                  <div *ngIf="isFieldInvalid('address.city')" class="invalid-feedback">
+                    {{ getFieldError('address.city') }}
+                  </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                  <label for="state" class="form-label">Estado *</label>
+                  <input type="text"
+                         id="state"
+                         formControlName="state"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('address.state')">
+                  <div *ngIf="isFieldInvalid('address.state')" class="invalid-feedback">
+                    {{ getFieldError('address.state') }}
+                  </div>
+                </div>
+
+                <div class="col-md-3 mb-3">-->
+                  <label for="country" class="form-label">País *</label>-->
+                  <input type="text"-->
+                         id="country"-->
+                         formControlName="country"-->
+                         class="form-control"-->
+                         [class.is-invalid]="isFieldInvalid('address.country')">-->
+                  <div *ngIf="isFieldInvalid('address.country')" class="invalid-feedback">-->
+                    {{ getFieldError('address.country') }}-->
+                  </div>-->
+                </div>-->
+              </div>
+            </fieldset>
+
+            <!-- Profissão -->
+            <fieldset class="mb-4" formGroupName="profession">
+              <legend class="h5">Profissão</legend>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="professionName" class="form-label">Nome da Profissão *</label>
+                  <input type="text"
+                         id="professionName"
+                         formControlName="name"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('profession.name')">
+                  <div *ngIf="isFieldInvalid('profession.name')" class="invalid-feedback">
+                    {{ getFieldError('profession.name') }}
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="professionLevel" class="form-label">Nível</label>
+                  <input type="text"
+                         id="professionLevel"
+                         formControlName="level"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('profession.level')">
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+              <button type="button"
+                      class="btn btn-secondary"
+                      (click)="onCancel()"
+                      [disabled]="loading">
+                Cancelar
+              </button>
+              <button type="submit"
+                      class="btn btn-primary"
+                      [disabled]="loading || userForm.invalid">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isEditMode ? 'Atualizar' : 'Criar' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
