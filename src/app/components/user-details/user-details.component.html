@@ -1,0 +1,93 @@
+<div class="container mt-4">
+  <div class="card">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="card-body text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="card-body">
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      <button class="btn btn-primary" routerLink="/users">Voltar</button>
+    </div>
+
+    <!-- User Details -->
+    <div *ngIf="user && !loading && !error" class="card-body">
+      <h2 class="card-title mb-4">Detalhes do Usuário</h2>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Informações Pessoais</h4>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Nome:</strong> {{ user.username }}
+            </li>
+            <li class="list-group-item">
+              <strong>Sobrenome:</strong> {{ user.surname }}
+            </li>
+            <li class="list-group-item">
+              <strong>Idade:</strong> {{ user.age }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <h4>Profissão</h4>
+          <ul class="list-group list-group-flush" *ngIf="user.professionDto">
+            <li class="list-group-item">
+              <strong>Nome:</strong> {{ user.professionDto.professionName }}
+            </li>
+            <li class="list-group-item">
+              <strong>Nível:</strong> {{ user.professionDto.professionLevel }}
+            </li>
+            <li class="list-group-item">
+              <strong>Salário:</strong> {{ user.professionDto.salary | currency:'BRL' }}
+            </li>
+          </ul>
+          <p *ngIf="!user.professionDto" class="text-muted">
+            Nenhuma profissão cadastrada
+          </p>
+        </div>
+
+        <div class="col-md-6 mt-4">
+          <h4>Endereço</h4>
+          <ul class="list-group list-group-flush" *ngIf="user.addressDto">
+
+            <li class="list-group-item" *ngIf="user.addressDto">
+              Estado: {{ user.addressDto.state }}
+            </li>
+
+            <li class="list-group-item" *ngIf="user.addressDto">
+              Cidade: {{ user.addressDto.city }}
+            </li>
+
+            <li class="list-group-item" *ngIf="user.addressDto">
+              Rua: {{ user.addressDto.street }}
+            </li>
+
+            <li class="list-group-item" *ngIf="user.addressDto">
+              Número: {{ user.addressDto.number }}
+            </li>
+
+          </ul>
+          <p *ngIf="!user.addressDto" class="text-muted">
+            Nenhum endereço cadastrado
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button class="btn btn-primary me-2" routerLink="/users">
+          Voltar
+        </button>
+        <button class="btn btn-outline-primary" [routerLink]="['/users/edit', user.userId]">
+          Editar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
