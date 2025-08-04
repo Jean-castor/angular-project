@@ -36,30 +36,21 @@
                     {{ getFieldError('username') }}
                   </div>
                 </div>
+              </div>
 
+              <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="surName" class="form-label">Sobrenome *</label>
+                  <label for="surname" class="form-label">Sobrenome *</label>
                   <input type="text"
-                         id="surName"
-                         formControlName="surName"
+                         id="surname"
+                         formControlName="surname"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('surName')">
-                  <div *ngIf="isFieldInvalid('surName')" class="invalid-feedback">
-                    {{ getFieldError('surName') }}
+                         [class.is-invalid]="isFieldInvalid('surname')">
+                  <div *ngIf="isFieldInvalid('surname')" class="invalid-feedback">
+                    {{ getFieldError('surname') }}
                   </div>
                 </div>
 
-<!--                <div class="col-md-6 mb-3">-->
-<!--                  <label for="surName" class="form-label">Email *</label>-->
-<!--                  <input type="text"-->
-<!--                         id="surName"-->
-<!--                         formControlName="email"-->
-<!--                         class="form-control"-->
-<!--                         [class.is-invalid]="isFieldInvalid('surName')">-->
-<!--                  <div *ngIf="isFieldInvalid('surName')" class="invalid-feedback">-->
-<!--                    {{ getFieldError('surName') }}-->
-<!--                  </div>-->
-<!--                </div>-->
               </div>
 
               <div class="row">
@@ -74,8 +65,21 @@
             </fieldset>
 
             <!-- Endereço -->
-            <fieldset class="mb-4" formGroupName="address">
+            <fieldset class="mb-4" formGroupName="addressDto">
               <legend class="h5">Endereço</legend>
+
+              <div class="col-md-3 mb-3">
+                <label for="zipCode" class="form-label">CEP *</label>
+                <input type="text"
+                       id="zipCode"
+                       formControlName="zipCode"
+                       class="form-control"
+                       (blur)="pesquisacep()"
+                       [class.is-invalid]="isFieldInvalid('addressDto.zipCode')">
+                <div *ngIf="isFieldInvalid('addressDto.zipCode')" class="invalid-feedback">
+                  {{ getFieldError('addressDto.zipCode') }}
+                </div>
+              </div>
 
               <div class="row">
                 <div class="col-md-8 mb-3">
@@ -84,35 +88,23 @@
                          id="street"
                          formControlName="street"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('address.street')">
-                  <div *ngIf="isFieldInvalid('address.street')" class="invalid-feedback">
-                    {{ getFieldError('address.street') }}
+                         [class.is-invalid]="isFieldInvalid('addressDto.street')">
+                  <div *ngIf="isFieldInvalid('addressDto.street')" class="invalid-feedback">
+                    {{ getFieldError('addressDto.street') }}
                   </div>
                 </div>
 
                 <div class="col-md-8 mb-3">
-                  <label for="numero" class="form-label">Número *</label>
+                  <label for="number" class="form-label">Número *</label>
                   <input type="number"
                          id="number"
                          formControlName="number"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('address.number')">
-                  <div *ngIf="isFieldInvalid('address.number')" class="invalid-feedback">
-                    {{ getFieldError('address.number') }}
+                         [class.is-invalid]="isFieldInvalid('addressDto.number')">
+                  <div *ngIf="isFieldInvalid('addressDto.number')" class="invalid-feedback">
+                    {{ getFieldError('addressDto.number') }}
                   </div>
                 </div>
-
-<!--                <div class="col-md-4 mb-3">-->
-<!--                  <label for="zipCode" class="form-label">CEP *</label>-->
-<!--                  <input type="text"-->
-<!--                         id="zipCode"-->
-<!--                         formControlName="zipCode"-->
-<!--                         class="form-control"-->
-<!--                         [class.is-invalid]="isFieldInvalid('address.zipCode')">-->
-<!--                  <div *ngIf="isFieldInvalid('address.zipCode')" class="invalid-feedback">-->
-<!--                    {{ getFieldError('address.zipCode') }}-->
-<!--                  </div>-->
-<!--                </div>-->
               </div>
 
               <div class="row">
@@ -121,40 +113,28 @@
                   <input type="text"
                          id="city"
                          formControlName="city" class="form-control"
-                         [class.is-invalid]="isFieldInvalid('address.city')">
-                  <div *ngIf="isFieldInvalid('address.city')" class="invalid-feedback">
-                    {{ getFieldError('address.city') }}
+                         [class.is-invalid]="isFieldInvalid('addressDto.city')">
+                  <div *ngIf="isFieldInvalid('addressDto.city')" class="invalid-feedback">
+                    {{ getFieldError('addressDto.city') }}
                   </div>
                 </div>
 
                 <div class="col-md-3 mb-3">
-                  <label for="state" class="form-label">Estado *</label>
+                  <label for="uf" class="form-label">Estado *</label>
                   <input type="text"
-                         id="state"
-                         formControlName="state"
+                         id="uf"
+                         formControlName="uf"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('address.state')">
-                  <div *ngIf="isFieldInvalid('address.state')" class="invalid-feedback">
-                    {{ getFieldError('address.state') }}
+                         [class.is-invalid]="isFieldInvalid('addressDto.uf')">
+                  <div *ngIf="isFieldInvalid('addressDto.uf')" class="invalid-feedback">
+                    {{ getFieldError('addressDto.uf') }}
                   </div>
                 </div>
-
-                <div class="col-md-3 mb-3">-->
-                  <label for="country" class="form-label">País *</label>-->
-                  <input type="text"-->
-                         id="country"-->
-                         formControlName="country"-->
-                         class="form-control"-->
-                         [class.is-invalid]="isFieldInvalid('address.country')">-->
-                  <div *ngIf="isFieldInvalid('address.country')" class="invalid-feedback">-->
-                    {{ getFieldError('address.country') }}-->
-                  </div>-->
-                </div>-->
               </div>
             </fieldset>
 
-            <!-- Profissão -->
-            <fieldset class="mb-4" formGroupName="profession">
+            <!-- Grupo de Profissão -->
+            <fieldset class="mb-4" formGroupName="professionDto">
               <legend class="h5">Profissão</legend>
 
               <div class="row">
@@ -162,11 +142,23 @@
                   <label for="professionName" class="form-label">Nome da Profissão *</label>
                   <input type="text"
                          id="professionName"
-                         formControlName="name"
+                         formControlName="professionName"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('profession.name')">
-                  <div *ngIf="isFieldInvalid('profession.name')" class="invalid-feedback">
-                    {{ getFieldError('profession.name') }}
+                         [class.is-invalid]="isFieldInvalid('professionDto.professionName')">
+                  <div *ngIf="isFieldInvalid('professionDto.professionName')" class="invalid-feedback">
+                    {{ getFieldError('professionDto.professionName') }}
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="salary" class="form-label">Salário</label>
+                  <input type="number"
+                         id="salary"
+                         formControlName="salary"
+                         class="form-control"
+                         [class.is-invalid]="isFieldInvalid('profession.salary')">
+                  <div *ngIf="isFieldInvalid('profession.salary')" class="invalid-feedback">
+                    {{ getFieldError('profession.salary') }}
                   </div>
                 </div>
 
@@ -174,9 +166,12 @@
                   <label for="professionLevel" class="form-label">Nível</label>
                   <input type="text"
                          id="professionLevel"
-                         formControlName="level"
+                         formControlName="professionLevel"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('profession.level')">
+                         [class.is-invalid]="isFieldInvalid('profession.professionLevel')">
+                  <div *ngIf="isFieldInvalid('profession.professionLevel')" class="invalid-feedback">
+                    {{ getFieldError('profession.professionLevel') }}
+                  </div>
                 </div>
               </div>
             </fieldset>

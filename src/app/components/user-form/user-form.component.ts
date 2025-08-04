@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '../../models';
-import { UserService } from '../../services/user.service';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AddressResponseDto, User} from '../../models';
+import {UserService} from '../../services/user.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-user-form',
@@ -18,8 +19,11 @@ export class UserFormComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
+  private readonly API_CEP_URL = 'http://localhost:8080/zipCode';
+
   constructor(
     private fb: FormBuilder,
+    private http: HttpClient,
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
@@ -30,6 +34,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.route.snapshot.params['id'];
     if (this.userId) {
+      console.log(this.userId)
       this.isEditMode = true;
       this.loadUser();
     }
@@ -38,17 +43,20 @@ export class UserFormComponent implements OnInit {
   createForm(): FormGroup {
     return this.fb.group({
       username: ['', [Validators.required, Validators.minLength(2)]],
-      surName: ['', [Validators.required, Validators.minLength(2)]],
+      surname: ['', [Validators.required, Validators.minLength(2)]],
       age: [null],
-      address: this.fb.group({
+
+      addressDto: this.fb.group({
+        zipCode: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
         street: ['', Validators.required],
         number: ['', Validators.required],
         city: ['', Validators.required],
-        state: ['', Validators.required]
+        uf: ['', Validators.required],
       }),
-      profession: this.fb.group({
-        name: ['', Validators.required],
-        level: ['']
+      professionDto: this.fb.group({
+        professionName: ['', Validators.required],
+        professionLevel: ['', Validators.required],
+        salary: [null]
       })
     });
   }
@@ -58,7 +66,9 @@ export class UserFormComponent implements OnInit {
     this.loading = true;
     this.userService.getUserById(this.userId).subscribe({
       next: (user) => {
+        console.log('Usuário carregado:', user); // Debug
         this.userForm.patchValue(user);
+        console.log('Form após patchValue:', this.userForm.value); // Debug
         this.loading = false;
       },
       error: (error) => {
@@ -69,6 +79,7 @@ export class UserFormComponent implements OnInit {
     });
   }
 
+
   onSubmit(): void {
     if (this.userForm.valid) {
       this.loading = true;
@@ -78,8 +89,8 @@ export class UserFormComponent implements OnInit {
 
       const operation =
         this.isEditMode
-        ? this.userService.updateUser(this.userId!, user)
-        : this.userService.createUser(user);
+          ? this.userService.updateUser(this.userId!, user)
+          : this.userService.createUser(user);
 
       operation.subscribe({
         next: () => {
@@ -104,7 +115,7 @@ export class UserFormComponent implements OnInit {
       if (control instanceof FormGroup) {
         this.markFormGroupTouched(control);
       } else {
-        control?.markAsTouched({ onlySelf: true });
+        control?.markAsTouched({onlySelf: true});
       }
     });
   }
@@ -118,7 +129,6 @@ export class UserFormComponent implements OnInit {
     const field = this.userForm.get(fieldName);
     if (field && field.errors) {
       if (field.errors['required']) return 'Este campo é obrigatório';
-      // if (field.errors['email']) return 'Email inválido';
       if (field.errors['minlength']) return `Mínimo de ${field.errors['minlength'].requiredLength} caracteres`;
     }
     return '';
@@ -126,5 +136,35 @@ export class UserFormComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/users']);
+  }
+
+  pesquisacep() {
+    // Pegue o valor do campo zipCode dentro do addressDto
+    const zipControl = this.userForm.get('addressDto.zipCode');
+    const cep = zipControl?.value?.replace(/\D/g, '');
+
+    if (cep && cep.length === 8) {
+      this.error = null;
+      this.http.get<AddressResponseDto>(`${this.API_CEP_URL}/${cep}`).subscribe({
+        next: (addressData) => {
+          this.userForm.get('addressDto')?.patchValue({
+            street: addressData.street,
+            city: addressData.city,
+            uf: addressData.uf
+          });
+          this.loading = false;
+          console.log(addressData.uf);
+        },
+        error: (err) => {
+          this.loading = false;
+          this.error = 'CEP não encontrado ou erro na busca.';
+          this.userForm.get('addressDto')?.patchValue({
+            street: '',
+            city: '',
+            uf: ''
+          });
+        }
+      });
+    }
   }
 }

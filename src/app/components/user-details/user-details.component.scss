@@ -1,0 +1,20 @@
+
+.card{
+  display: flex;
+  flex-direction: column;
+}
+
+.label-info {
+  color: #202730;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-right: 8px;
+
+  // Efeito hover opcional
+  &:hover {
+    color: darken(#296ca8, 10%);
+  }
+
+  // Animação suave opcional
+  transition: color 0.3s ease;
+}

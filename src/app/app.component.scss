@@ -1,0 +1,59 @@
+.navbar-brand{
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.nav-link{
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #918c8c;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+// Overlay opcional para melhorar a legibilidade do conteúdo
+:host::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+// Garante que o conteúdo fique acima do overlay
+:host ::ng-deep router-outlet + * {
+  position: relative;
+  z-index: 1;
+}
+
+.table {
+  width: 100%;
+
+  thead {
+    width: 100%;
+
+    tr {
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+
+    th {
+      text-align: left;
+      padding: 1rem;
+    }
+  }
+}

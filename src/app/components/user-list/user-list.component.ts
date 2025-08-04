@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { User, UserPage } from '../../models/user.model'; // Caminho correto!
+import { User, UserPage } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -13,10 +13,16 @@ import { UserService } from '../../services/user.service';
 export class UserListComponent implements OnInit {
   users: User[] = [];
   page = 0;
-  size = 10;
+  size = 6;
   totalPages = 0;
   loading = false;
   error: string | null = null;
+
+  // Propriedades para o modal
+  showDeleteModal = false;
+
+  // Alterando o tipo para armazenar o usuário completo
+  userToDelete: User | null = null;
 
   constructor(private userService: UserService) { }
 
@@ -55,15 +61,27 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  deleteUser(id: string): void {
-    if (confirm('Tem certeza que deseja excluir este usuário?')) {
-      this.userService.deleteUser(id).subscribe({
+  openDeleteModal(user: User): void {
+    this.userToDelete = user;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.userToDelete = null;
+  }
+
+  confirmDelete(): void {
+    if (this.userToDelete?.userId) {
+      this.userService.deleteUser(this.userToDelete.userId).subscribe({
         next: () => {
           this.loadUsers();
+          this.closeDeleteModal();
         },
         error: (error) => {
           this.error = 'Erro ao excluir usuário';
           console.error('Erro ao excluir usuário:', error);
+          this.closeDeleteModal();
         }
       });
     }

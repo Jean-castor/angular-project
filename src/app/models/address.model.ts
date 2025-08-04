@@ -1,9 +1,8 @@
-export interface Address {
+export interface  AddressResponseDto {
   id?: number;
   street: string;
   city: string;
-  state: string;
-  number: number;
-  // zipCode: string;
-  // country: string;
+  uf: string;
+  number?: number;
+  zipCode: string;
 }

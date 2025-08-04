@@ -24,13 +24,13 @@
           <h4>Informações Pessoais</h4>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <strong>Nome:</strong> {{ user.username }}
+              <strong class="label-info">Nome:</strong> {{ user.username }}
             </li>
             <li class="list-group-item">
-              <strong>Sobrenome:</strong> {{ user.surname }}
+              <strong class="label-info">Sobrenome:</strong> {{ user.surname }}
             </li>
             <li class="list-group-item">
-              <strong>Idade:</strong> {{ user.age }}
+              <strong class="label-info">Idade:</strong> {{ user.age }}
             </li>
           </ul>
         </div>
@@ -39,13 +39,13 @@
           <h4>Profissão</h4>
           <ul class="list-group list-group-flush" *ngIf="user.professionDto">
             <li class="list-group-item">
-              <strong>Nome:</strong> {{ user.professionDto.professionName }}
+              <strong class="label-info">Nome: </strong> {{ user.professionDto.professionName }}
             </li>
             <li class="list-group-item">
-              <strong>Nível:</strong> {{ user.professionDto.professionLevel }}
+              <strong class="label-info">Nível: </strong> {{ user.professionDto.professionLevel }}
             </li>
             <li class="list-group-item">
-              <strong>Salário:</strong> {{ user.professionDto.salary | currency:'BRL' }}
+              <strong class="label-info">Salário: </strong> {{ user.professionDto.salary | currency:'BRL' }}
             </li>
           </ul>
           <p *ngIf="!user.professionDto" class="text-muted">
@@ -58,24 +58,24 @@
           <ul class="list-group list-group-flush" *ngIf="user.addressDto">
 
             <li class="list-group-item" *ngIf="user.addressDto">
-              Estado: {{ user.addressDto.state }}
+              <strong class="label-info">Cep: </strong>{{ user.addressDto.zipCode}}
             </li>
 
             <li class="list-group-item" *ngIf="user.addressDto">
-              Cidade: {{ user.addressDto.city }}
+             <strong class="label-info"> Estado: </strong>{{ user.addressDto.uf }}
             </li>
 
             <li class="list-group-item" *ngIf="user.addressDto">
-              Rua: {{ user.addressDto.street }}
+              <strong class="label-info">Cidade: </strong>{{ user.addressDto.city }}
             </li>
 
             <li class="list-group-item" *ngIf="user.addressDto">
-              Número: {{ user.addressDto.number }}
+               <strong class="label-info">Rua: </strong>{{ user.addressDto.street }}
             </li>
 
           </ul>
           <p *ngIf="!user.addressDto" class="text-muted">
-            Nenhum endereço cadastrado
+            Endereço não encontrado
           </p>
         </div>
       </div>

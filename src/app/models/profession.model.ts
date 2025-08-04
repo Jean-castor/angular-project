@@ -1,7 +1,6 @@
 export interface Profession {
   id?: number;
-  name: string;
-  level: string;
+  professionName: string;
+  professionLevel: string;
   salary: number;
-  // description?: string;
 }
