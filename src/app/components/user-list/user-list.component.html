@@ -2,20 +2,9 @@
   <div class="row">
     <div class="col-12">
       <div class="d-flex justify-content-between align-items-center mb-3">
-
-        <div class="col-12 col-md-6">
           <div *ngIf="users.length > 0" class="user-info">
-            <h2 class="mb-2 list-title">Lista de Usuários</h2>
             <h3 class="text-secondary">Total: {{ users.length }}</h3>
           </div>
-        </div>
-
-
-        <div class="col-12 col-md-6 text-md-end mt-3 mt-md-0">
-          <button class="btn btn-primary w-md-auto" routerLink="/users/create">
-            <i class="fas fa-plus"></i> Novo Usuário
-          </button>
-        </div>
 
       </div>
 
