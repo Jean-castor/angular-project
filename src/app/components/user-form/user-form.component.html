@@ -121,57 +121,45 @@
             </fieldset>
 
             <!-- Endereço -->
-            <fieldset class="mb-4" formGroupName="addressDto">
+            <fieldset class="mb-4" formGroupName="cepDto">
               <legend class="h5">Endereço</legend>
 
               <div class="col-md-3 mb-3">
-                <label for="zipCode" class="form-label">CEP *</label>
+                <label for="cep" class="form-label">CEP *</label>
                 <input type="text"
-                       id="zipCode"
-                       formControlName="zipCode"
+                       id="cep"
+                       formControlName="cep"
                        class="form-control"
                        (blur)="pesquisacep()"
-                       [class.is-invalid]="isFieldInvalid('addressDto.zipCode')">
-                <div *ngIf="isFieldInvalid('addressDto.zipCode')" class="invalid-feedback">
-                  {{ getFieldError('addressDto.zipCode') }}
+                       [class.is-invalid]="isFieldInvalid('cepDto.cep')">
+                <div *ngIf="isFieldInvalid('cepDto.cep')" class="invalid-feedback">
+                  {{ getFieldError('cepDto.cep') }}
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-8 mb-3">
-                  <label for="street" class="form-label">Rua *</label>
+                  <label for="logradouro" class="form-label">Rua *</label>
                   <input type="text"
-                         id="street"
-                         formControlName="street"
+                         id="logradouro"
+                         formControlName="logradouro"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('addressDto.street')">
-                  <div *ngIf="isFieldInvalid('addressDto.street')" class="invalid-feedback">
-                    {{ getFieldError('addressDto.street') }}
-                  </div>
-                </div>
-
-                <div class="col-md-8 mb-3">
-                  <label for="number" class="form-label">Número *</label>
-                  <input type="number"
-                         id="number"
-                         formControlName="number"
-                         class="form-control"
-                         [class.is-invalid]="isFieldInvalid('addressDto.number')">
-                  <div *ngIf="isFieldInvalid('addressDto.number')" class="invalid-feedback">
-                    {{ getFieldError('addressDto.number') }}
+                         [class.is-invalid]="isFieldInvalid('cepDto.logradouro')">
+                  <div *ngIf="isFieldInvalid('cepDto.logradouro')" class="invalid-feedback">
+                    {{ getFieldError('cepDto.logradouro') }}
                   </div>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="city" class="form-label">Cidade *</label>
+                  <label for="localidade" class="form-label">Cidade *</label>
                   <input type="text"
-                         id="city"
-                         formControlName="city" class="form-control"
-                         [class.is-invalid]="isFieldInvalid('addressDto.city')">
-                  <div *ngIf="isFieldInvalid('addressDto.city')" class="invalid-feedback">
-                    {{ getFieldError('addressDto.city') }}
+                         id="localidade"
+                         formControlName="localidade" class="form-control"
+                         [class.is-invalid]="isFieldInvalid('cepDto.localidade')">
+                  <div *ngIf="isFieldInvalid('cepDto.localidade')" class="invalid-feedback">
+                    {{ getFieldError('cepDto.localidade') }}
                   </div>
                 </div>
 
@@ -181,10 +169,22 @@
                          id="uf"
                          formControlName="uf"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('addressDto.uf')">
-                  <div *ngIf="isFieldInvalid('addressDto.uf')" class="invalid-feedback">
-                    {{ getFieldError('addressDto.uf') }}
+                         [class.is-invalid]="isFieldInvalid('cepDto.uf')">
+                  <div *ngIf="isFieldInvalid('cepDto.uf')" class="invalid-feedback">
+                    {{ getFieldError('cepDto.uf') }}
                   </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <label for="bairro" class="form-label">Bairro *</label>
+                <input type="text"
+                       id="bairro"
+                       formControlName="bairro"
+                       class="form-control"
+                       [class.is-invalid]="isFieldInvalid('cepDto.bairro')">
+                <div *ngIf="isFieldInvalid('cepDto.bairro')" class="invalid-feedback">
+                  {{ getFieldError('cepDto.bairro') }}
                 </div>
               </div>
             </fieldset>

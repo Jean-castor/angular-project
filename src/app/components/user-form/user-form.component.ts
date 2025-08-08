@@ -50,30 +50,18 @@ export class UserFormComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
 
-      addressDto: this.fb.group({
-        zipCode: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
-        street: ['', Validators.required],
-        number: ['', Validators.required],
-        city: ['', Validators.required],
+      cepDto: this.fb.group({
+        cep: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
+        logradouro: ['', Validators.required],
+        complemento: ['', Validators.required],
+        localidade: ['', Validators.required],
+        bairro: ['', Validators.required],
         uf: ['', Validators.required]
       }),
       professionDto: this.fb.group({
         professionName: ['', Validators.required],
         professionLevel: ['', Validators.required],
         salary: [null]
-      })
-    });
-  }
-
-  getCep(): FormGroup {
-    return this.fb.group({
-      cepResponseDto: this.fb.group({
-        cep: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
-        logradouro: ['', Validators.required],
-        complemento: ['', Validators.required],
-        bairro: ['', Validators.required],
-        localidade: ['', Validators.required],
-        uf: ['', Validators.required]
       })
     });
   }
@@ -157,28 +145,32 @@ export class UserFormComponent implements OnInit {
   }
 
   pesquisacep() {
-    // Pegue o valor do campo zipCode dentro do addressDto
-    const zipControl = this.userForm.get('addressDto.zipCode');
+    // Pegue o valor do campo zipCode dentro do cepDto
+    const zipControl = this.userForm.get('cepDto.cep');
     const cep = zipControl?.value?.replace(/\D/g, '');
 
     if (cep && cep.length === 8) {
       this.error = null;
-      this.http.get<AddressResponseDto>(`${this.API_CEP_URL}/${cep}`).subscribe({
-        next: (addressData) => {
-          this.userForm.get('addressDto')?.patchValue({
-            street: addressData.street,
-            city: addressData.city,
-            uf: addressData.uf
+      this.http.get<CepResponseDto>(`${this.API_CEP_URL}/${cep}`).subscribe({
+        next: (cepData) => {
+          this.userForm.get('cepDto')?.patchValue({
+            rua: cepData.logradouro,
+            localidade: cepData.localidade,
+            bairro: cepData.bairro,
+            uf: cepData.uf
           });
           this.loading = false;
-          console.log(addressData.uf);
+          console.log("Estado: " + cepData.uf);
+          console.log("Rua: " + cepData.logradouro);
+          console.log("Cidade: " + cepData.localidade);
+          console.log("Bairro: " + cepData.bairro);
         },
         error: (err) => {
           this.loading = false;
           this.error = 'CEP não encontrado ou erro na busca.';
-          this.userForm.get('addressDto')?.patchValue({
-            street: '',
-            city: '',
+          this.userForm.get('cepDto')?.patchValue({
+            logradouro: '',
+            localidade: '',
             uf: ''
           });
         }
