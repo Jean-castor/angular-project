@@ -50,7 +50,6 @@
                     {{ getFieldError('surname') }}
                   </div>
                 </div>
-
               </div>
 
               <div class="row">
@@ -68,7 +67,7 @@
                   <label for="email" class="form-label">Email *</label>
                   <input type="email"
                          id="email"
-                         formControlName="username"
+                         formControlName="email"
                          class="form-control"
                          [class.is-invalid]="isFieldInvalid('email')">
                   <div *ngIf="isFieldInvalid('email')" class="invalid-feedback">
@@ -79,14 +78,43 @@
 
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="telefone" class="form-label">Telefone *</label>
+                  <label for="phone" class="form-label">Telefone *</label>
                   <input type="tel"
-                         id="cellphone"
-                         formControlName="username"
+                         id="phone"
+                         formControlName="phone"
                          class="form-control"
-                         [class.is-invalid]="isFieldInvalid('cellphone')">
-                  <div *ngIf="isFieldInvalid('cellphone')" class="invalid-feedback">
-                    {{ getFieldError('cellphone') }}
+                         [class.is-invalid]="isFieldInvalid('phone')">
+                  <div *ngIf="isFieldInvalid('phone')" class="invalid-feedback">
+                    {{ getFieldError('phone') }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="password" class="form-label">Senha *</label>
+                  <div class="input-group">
+                    <input
+                      [type]="showPassword ? 'text' : 'password'"
+                      id="password"
+                      formControlName="password"
+                      class="form-control"
+                      [class.is-invalid]="isFieldInvalid('password')">
+
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            (click)="showPassword = !showPassword"
+                            tabindex="-1">
+                      <i *ngIf="showPassword == false">
+                        Exibir
+                      </i>
+                      <i *ngIf="showPassword == true">
+                        Ocultar
+                      </i>
+                    </button>
+                  </div>
+                  <div *ngIf="isFieldInvalid('password')" class="invalid-feedback">
+                    {{ getFieldError('password') }}
                   </div>
                 </div>
               </div>

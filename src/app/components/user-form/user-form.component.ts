@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AddressResponseDto, User} from '../../models';
+import {CepResponseDto} from '../../models/cep.model/cep.model.component';
 import {UserService} from '../../services/user.service';
 import {HttpClient} from '@angular/common/http';
 
@@ -45,13 +46,16 @@ export class UserFormComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(2)]],
       surname: ['', [Validators.required, Validators.minLength(2)]],
       age: [null],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
 
       addressDto: this.fb.group({
         zipCode: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
         street: ['', Validators.required],
         number: ['', Validators.required],
         city: ['', Validators.required],
-        uf: ['', Validators.required],
+        uf: ['', Validators.required]
       }),
       professionDto: this.fb.group({
         professionName: ['', Validators.required],
@@ -60,6 +64,21 @@ export class UserFormComponent implements OnInit {
       })
     });
   }
+
+  getCep(): FormGroup {
+    return this.fb.group({
+      cepResponseDto: this.fb.group({
+        cep: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
+        logradouro: ['', Validators.required],
+        complemento: ['', Validators.required],
+        bairro: ['', Validators.required],
+        localidade: ['', Validators.required],
+        uf: ['', Validators.required]
+      })
+    });
+  }
+
+  showPassword = true;
 
   loadUser(): void {
     if (!this.userId) return;
@@ -78,7 +97,6 @@ export class UserFormComponent implements OnInit {
       }
     });
   }
-
 
   onSubmit(): void {
     if (this.userForm.valid) {

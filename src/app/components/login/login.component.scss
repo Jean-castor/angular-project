@@ -1,0 +1,27 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  width: 100%;
+  max-width: 350px;
+  transform: translateY(-25%); /* sobe metade da altura do próprio form */
+
+  .email {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .password {
+    margin-bottom: 20px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .btn {
+    margin-bottom: 20px;
+  }
+}
